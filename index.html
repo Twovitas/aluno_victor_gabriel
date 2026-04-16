@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resgate de Projeto</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:30px;
+}
+
+button{
+  background:#22c55e;
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  color:white;
+}
+
+#lista{
+  margin-top:20px;
+  list-style:none;
+}
+
+.card{
+  background:#1e293b;
+  margin:10px auto;
+  padding:10px;
+  border-radius:8px;
+  width:60%;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Buscar Dados</h1>
+<button onclick="buscarDados()">Buscar</button>
+
+<ul id="lista"></ul>
+
+<script>
+function buscarDados(){
+  let lista = document.getElementById("lista")
+
+  lista.innerHTML = "<p>Carregando...</p>"
+
+  fetch("https://jsonplaceholder.typicode.com/posts") // CORRIGIDO
+    .then(res => res.json())
+    .then(dados => {
+      lista.innerHTML = dados
+        .slice(0,10)
+        .map(item => `
+          <li class="card">
+            <strong>${item.title}</strong>
+          </li>
+        `)
+        .join("")
+    })
+    .catch(erro => {
+      lista.innerHTML = "<p>Erro ao carregar dados</p>"
+    })
+}
+</script>
+
+</body>
+</html>
